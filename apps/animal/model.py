@@ -1,15 +1,15 @@
 from django.db import models
+from especies.models import Especie
 
 class Animal(models.Model):
-    nome = models.CharField('Nome', max_length=50)
-    foto = models.ImageField('Foto', upload_to='photos')
-    especie = models.CharField(Especie, max_length=50)
+    name = models.CharField('Nome', max_length=50)
+    description = models.TextField('Descricao', max_length=200)
     raca = models.CharField('Raça', max_length=100)
     sexo = models.CharField('Sexo', max_length=1, choices=[('M','Masculino'),('F','Feminino')])
-    descricao = models.TextField('Descricao', max_length=200)
-    data_inscricao = models.DateField('Data de inscricao', auto_now=False, auto_now_add=False)
+    photo = models.ImageField('Foto', upload_to='photos')
     disponivel = models.BooleanField('Disponivel', default=False)
-    
+    data_resgate = models.DateField('Data de resgate', auto_now=False, auto_now_add=False)
+    especie = models.ForeignKey(Especie, on_delete=models.CASCADE)
     
     class Meta:
         verbose_name = 'Animal'
