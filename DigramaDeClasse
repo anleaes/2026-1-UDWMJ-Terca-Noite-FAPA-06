@@ -1,0 +1,117 @@
+@startuml ModeloApp
+
+class Pessoa{
+ - id: Int
+ - nome: String
+ - email: String
+ - senha: String
+ - telefone: String
+ - dataCadastro: DateTime
+ + atualizarDados(): void
+ + alterarSenha(): void
+}
+
+class Adotante{
+ - cpf: String
+ - endereco: String
+ - dataNascimento: Date
+ - possuiOutroAnimal: Boolean
+ + visualizarAnimais(): List<Animal>
+ + iniciarAdocao(): Adocao
+ + cancelarAdocao(): void
+}
+
+class Adm{
+ - nivelAcesso: String
+ + cadastrarAnimal(): void
+ + aprovarAdocao(): void
+ + reprovarAdocao(): void
+ + gerenciarUsuarios(): void
+ + gerarRelatorios(): void
+}
+
+class Adocao{
+ - id: Int
+ - dataSolicitacao: DateTime
+ - status: StatusAdocao
+ - observacao: String
+ + aprovar(): void
+ + reprovar(): void
+ + concluir(): void
+ + cancelar(): void
+}
+
+
+class Historico{
+ - data: DateTime
+ - acao: String
+ - descricao: String
+ - realizadoPor: Adm
+}
+
+class Animal{
+ - id: Int
+ - nome: String
+ - especie: Forenkey
+ - raca: String
+ - idade: Int
+ - sexo: String
+ - porte: String
+ - descricao: String
+ - foto: String
+ - vacina: ManytoMany
+ - dataCadastro: DateTime
+ + atualizarDados(): void
+ + marcarComoIndisponivel(): void
+}
+
+
+class Abrigo{
+ - id: Int
+ - nome: String
+ - endereco: String
+ - telefone: String
+ - email: String
+ + atualizarDados(): void
+}
+
+class Especie{
+- id: Int
+- tipo: String
+}
+
+
+class Vacina{
+- dataAplicacao: DateTime
+- tipo: String
+- dose: Int
+- animal: ForignKey
+}
+
+class HistoricoAnimal{
+-local: String
+-situacao: String
+-doencas: String
+-dataDeChegada: DateTime
+}
+
+class AdocaoDeAnimais{
+- animal: ForignKey
+- adocao: ForignKey
+- numeroDeanimais: Int
+}
+
+Abrigo <--* Adm: 1..*
+Pessoa <|-up- Adotante: 1..1
+Pessoa <|-up- Adm: 1..1
+Abrigo<--* Animal: 1..*
+Adm --> Adocao: 1..*
+Animal *--> AdocaoDeAnimais: *..*
+Historico <--* Adocao: 1..*
+Adocao <--* Adotante: 1..*
+HistoricoAnimal ...> Animal
+Animal *--> Vacina: *..* 
+AdocaoDeAnimais *--> Adocao: *..*
+Animal *--> Especie: 1..*
+
+@enduml
