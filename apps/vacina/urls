@@ -1,0 +1,11 @@
+from django.urls import path
+from . import views
+
+app_name = 'vacinas'
+
+urlpatterns = [
+    path('adicionar/', views.add_vacina, name='add_vacina'),
+    path('', views.list_vacinas, name='list_vacinas'),
+    path('editar/<int:id_vacina>/', views.edit_vacina, name='edit_vacina'),
+    path('excluir/<int:id_vacina>/', views.delete_vacina, name='delete_vacina'),
+]
